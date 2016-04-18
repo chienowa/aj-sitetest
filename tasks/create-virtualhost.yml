@@ -1,0 +1,56 @@
+
+# Create virtualhost dedicated ftp user
+  - name:  generate password
+    command: mkpasswd
+    always_run: yes
+    register: user_password
+
+  - name: create ftp vh user
+    user: name={{ user_name }}  shell=/sbin/nologin groups=ec2-user home="{{ vhdir }}/{{domain}}" password={{user_password.stdout |password_hash('sha512')  }}
+
+  - name: configure chroot for the user
+    lineinfile: dest=/etc/vsftpd/chroot_list regexp="{{ user_name }}" state=present  line="{{ user_name }}"
+
+#
+# Create Virtual Host
+#
+  - name: create vh document root
+    file: dest="{{ vhdir }}/{{domain}}" state=directory owner={{user_name}} group={{group_name}} mode=0775
+ 
+  - name: configure virtualhost for apache
+    template: src=templates/vhost.conf.j2 dest={{confdir}}/{{conffile}}
+
+  - name: add domain to local hosts
+    lineinfile: dest=/etc/hosts regexp="127.0.0.1    {{domain}}" state=present  line="127.0.0.1    {{domain}}"
+    when: action == 'create'
+
+  - name: restart httpd
+    service: name=httpd state=restarted
+
+# DB
+
+  - name: be sure mysqld is running and enabled
+    service: name=mysqld state=started enabled=yes
+
+  - name:  generate db password
+    command: mkpasswd
+    always_run: yes
+    register: db_password
+
+  - name: Create vh database
+    mysql_db: db={{db_name}} state=present collation=utf8_general_ci encoding=utf8
+
+  - name: Create dedicated database user
+    mysql_user: >
+      name={{user_name}}
+      password={{db_password.stdout}}
+      priv="{{ db_name }}.*:ALL"
+      state=present
+
+  - debug: msg="domain {{ domain }} is created and virtualhost is now active" 
+
+  - debug: msg="user  {{ user_name }} is created and password is {{user_password.stdout}}" 
+
+  - debug: msg="dbuser and dbname is {{ user_name }}. db password is {{db_password.stdout}}" 
+
+

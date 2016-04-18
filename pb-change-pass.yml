@@ -1,0 +1,16 @@
+---
+- hosts: all
+  vars:
+    user_name: ec2-user
+    user_password: change-me-if-you-can
+  sudo: yes
+  tasks:
+    - name: change {{user_name}} password # set password for ftp access
+      shell: echo "{{user_password}}" | passwd --stdin "{{user_name}}"
+      notify: sync password
+
+    - debug: msg="User Name {{ user_name }} , Password {{ user_password }}" 
+
+  handlers:
+    - name: sync password
+      command: pwconv

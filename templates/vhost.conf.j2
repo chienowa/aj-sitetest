@@ -1,0 +1,29 @@
+<VirtualHost *:80>
+    ServerAdmin {{adminemail}}
+    ServerName {{domain}}
+    ServerAlias {{domain}}
+    DocumentRoot {{vhdir}}/{{domain}}
+    <Directory />
+       AllowOverride All
+    </Directory>
+    <Directory $rootDir>
+       Options Indexes FollowSymLinks MultiViews
+       AllowOverride all
+    </Directory>
+</VirtualHost>
+<VirtualHost *:443>
+    SSLEngine on
+    SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+    ServerAdmin {{ adminemail }}
+    ServerName {{ domain }}
+    ServerAlias {{ domain }}
+    DocumentRoot {{vhdir}}/{{domain}}
+    <Directory />
+        AllowOverride All
+    </Directory>
+    <Directory $rootDir>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride all
+    </Directory>
+</VirtualHost>

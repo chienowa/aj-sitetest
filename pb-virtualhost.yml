@@ -1,0 +1,24 @@
+---
+- hosts: all
+  vars:
+    action: create|delete
+    force: true
+    domain: example.com
+    vhdir: /var/www
+    confdir: /etc/httpd/conf.d/
+    conffile: "{{ domain }}.conf"
+    adminemail: "webmaster@{{domain}}"
+    user_name: "{{ domain |replace('.','') }}"
+    group_name: ec2-user
+    db_name: "{{user_name}}"
+  sudo: yes
+  tasks:
+    - include: tasks/create-virtualhost.yml
+      when: action == 'create'
+
+    - include: tasks/delete-virtualhost.yml
+      when: action == 'delete'
+
+  handlers:
+    - name: sync password
+      command: pwconv

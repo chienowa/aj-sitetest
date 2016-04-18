@@ -1,0 +1,39 @@
+#
+# Delete Virtual Host
+#
+
+  - debug: msg="force is  {{ force }} " 
+
+  - name: delete vh document root
+    file: dest={{ vhdir }}/{{domain}} state=absent owner={{user_name}} 
+    when: force == true
+ 
+  - name: delete virtualhost for apache
+    file: path={{confdir}}/{{conffile}} state=absent    
+
+  - name: delete domain from local hosts
+    lineinfile: dest=/etc/hosts regexp="127.0.0.1    {{domain}}" state=absent
+
+  - name: delete chroot for the user
+    lineinfile: dest=/etc/vsftpd/chroot_list regexp="{{ domain |replace('.','')}}" state=absent
+    when: force == true
+
+  - name: delete ftp user
+    user: name="{{ domain |replace('.','')}}" state=absent remove=yes
+    when: force == true
+
+# Delete Database
+  
+  - name: Delete MySQL virtualhost user
+    mysql_user: name={{user_name}} state=absent
+
+  - name: Delete vh database
+    mysql_db: db={{db_name}} state=absent 
+    when: force == true
+
+  - name: restart httpd
+    service: name=httpd state=restarted
+
+  - debug: msg="domain {{ domain }} is deleted and virtualhost is now gone" 
+
+
