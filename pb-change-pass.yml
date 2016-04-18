@@ -5,11 +5,16 @@
     user_password: change-me-if-you-can
   sudo: yes
   tasks:
+    - name:  generate user password
+      command: mkpasswd
+      always_run: yes
+      register: user_password
+
     - name: change {{user_name}} password # set password for ftp access
-      shell: echo "{{user_password}}" | passwd --stdin "{{user_name}}"
+      shell: echo "{{user_password.stdout}}" | passwd --stdin "{{user_name}}"
       notify: sync password
 
-    - debug: msg="User Name {{ user_name }} , Password {{ user_password }}" 
+    - debug: msg="User Name {{ user_name }} , Password {{ user_password.stdout }}" 
 
   handlers:
     - name: sync password
