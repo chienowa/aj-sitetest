@@ -18,7 +18,9 @@ Cloud servers (DigitalOcean,EC2)
 Clone https://github.com/chienowa/aj-sitetest.git  
 Exec shell as follows
 
-  ansible-playbook -i ${SERVER}, -u ec2-user pb-virtualhost.yml  --extra-vars "action=${ACTION} domain=${DOMAIN}";
+
+    ansible-playbook -i ${SERVER}, -u ec2-user pb-virtualhost.yml  --extra-vars "action=${ACTION} domain=${DOMAIN}";
+
 
 
 ## Licence
