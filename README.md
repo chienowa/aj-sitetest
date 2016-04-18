@@ -5,15 +5,13 @@ configure test server using ansible and jenkins
 
 ## Description
 
-## Demo
-
-## VS. 
-
 ## Requirement
 
-## Usage
+ansible 1.9.4 or higher
+Jenkins
+Cloud servers (DigitalOcean,EC2)
 
-## Install
+## Usage
 
 ## Contribution
 
