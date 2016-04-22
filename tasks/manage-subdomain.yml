@@ -7,10 +7,10 @@
 
   - debug: msg="DEBUG {{dbg}}" 
  
-  - name: manage subdomain using script/do-subdomain.sh
-    shell: script/do-subdomain.sh {{action}} {{apikey}} {{host}} {{tld}} {{ip_address}}
-    register: subdomain
+#  - name: manage subdomain using script/do-subdomain.sh
+#    shell: script/do-subdomain.sh {{action}} {{apikey}} {{host}} {{tld}} {{ip_address}}
+#    register: subdomain
 
- - debug: msg="{{ host }} is {{action}}d on {{ip_address}}" 
+# - debug: msg="{{ host }} is {{action}}d on {{ip_address}}" 
 
 
