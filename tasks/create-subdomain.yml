@@ -1,0 +1,8 @@
+
+# Create virtualhost subdomain on digitalocean DNS service
+
+  - name: create subdomain
+    shell: script/do-subdomain.sh {{apikey}} {{host}} {{tld}} {{ip_address}}
+    register: do-domain-return
+
+  - debug: msg="subdomain {{ domain }} is created on {{ip_address}} and virtualhost is now active" 

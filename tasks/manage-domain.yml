@@ -1,0 +1,23 @@
+# add new domain
+    - name: add new domain on digitalocean
+      digital_ocean_domain:
+        api_token: "{{apikey}}"
+        state: present
+        name: "{{domain}}"
+        ip: "{{ip_address}}"
+      when: action == 'create'
+
+    - debug: msg="new domain added {{domain}}"
+      when: action == 'create'
+
+    - debug: msg="digital_ocean_domain is broken. so it fails. delete it manually" 
+      when: action == 'delete'
+
+    - name: delete domain on digitalocean
+      digital_ocean_domain:
+        api_token: "{{apikey}}"
+        state: absent
+        name: "{{domain}}"
+      when: action == 'delete'
+
+

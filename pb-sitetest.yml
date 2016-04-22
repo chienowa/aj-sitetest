@@ -1,0 +1,33 @@
+---
+- hosts: all
+  vars:
+    action: create|delete
+    force: true
+    apikey: default_do-apikey
+    host: subdomain
+    tld: nabelog.com
+    domain: "{{host}}.{{tld}}"
+    vhdir: /var/www
+    confdir: /etc/httpd/conf.d/
+    conffile: "{{host}}.{{ domain }}.conf"
+    adminemail: "webmaster@{{domain}}"
+    user_name: "{{ domain | replace('.','') | truncate(16, True, '')  }}"
+    group_name: ec2-user
+    db_name: "{{user_name}}"
+    ip_address: "{{ ansible_eth0.ipv4.address }}"
+  sudo: yes
+
+  tasks:
+    - debug: msg="{{user_name}}"
+    - include: tasks/create-virtualhost.yml
+      when: action == 'create'
+
+    - include: tasks/create-subdomain.yml
+      when: action == 'create'
+
+    - include: tasks/delete-virtualhost.yml
+      when: action == 'delete'
+
+  handlers:
+    - name: sync password
+      command: pwconv
