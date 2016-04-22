@@ -15,7 +15,7 @@
     lineinfile: dest=/etc/hosts regexp="127.0.0.1    {{domain}}" state=absent
 
   - name: delete chroot for the user
-    lineinfile: dest=/etc/vsftpd/chroot_list regexp="{{ domain |replace('.','')}}" state=absent
+    lineinfile: dest=/etc/vsftpd/chroot_list regexp="{{user_name}}" state=absent
     when: force == true
 
   - name: delete ftp user
