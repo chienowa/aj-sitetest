@@ -1,15 +1,15 @@
 
 # manage virtualhost subdomain on digitalocean DNS service
-
-  - name: manage subdomain
-    shell: script/do-subdomain.sh {{action}} {{apikey}} {{host}} {{tld}} {{ip_address}}
-    register: subdomain
-
   - name: test script path
     shell: pwd
     register: dbg
 
   - debug: msg="DEBUG {{ dbg }} " 
-  - debug: msg="subdomain {{ host }} is {{action}}d on {{ip_address}}" 
+ 
+  - name: manage subdomain
+    shell: script/do-subdomain.sh {{action}} {{apikey}} {{host}} {{tld}} {{ip_address}}
+    register: subdomain
+
+ - debug: msg="subdomain {{ host }} is {{action}}d on {{ip_address}}" 
 
 
