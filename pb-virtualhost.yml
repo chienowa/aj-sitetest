@@ -21,7 +21,8 @@
     - include: tasks/delete-virtualhost.yml
       when: action == 'delete'
 
-    - include: tasks/manage-domain.yml
+# skip domain management since since ansible module is broken. please add it manually if you like
+#    - include: tasks/manage-domain.yml
 
 
   handlers:
