@@ -49,8 +49,8 @@
 
   - debug: msg="domain {{ domain }} is created and virtualhost is now active" 
 
-  - debug: msg="user  {{ user_name }} is created and password is {{user_password.stdout}}" 
+  - debug: msg="user  [{{ user_name }}] is created and password is [{{user_password.stdout}}]" 
 
-  - debug: msg="dbuser and dbname is {{ user_name }}. db password is {{db_password.stdout}}" 
+  - debug: msg="dbuser is [{{ user_name }}]. db password is [{{db_password.stdout}}]" 
 
 
