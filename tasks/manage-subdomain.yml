@@ -2,7 +2,7 @@
 # manage virtualhost subdomain on digitalocean DNS service
 
   - name: manage subdomain using script/do-subdomain.sh
-    script: script/do-subdomain.sh --some-arguments {{action}} {{apikey}} {{host}} {{tld}} {{ip_address}}
+    script: script/do-subdomain.sh {{action}} {{apikey}} {{host}} {{tld}} {{ip_address}}
 #    shell: script/do-subdomain.sh {{action}} {{apikey}} {{host}} {{tld}} {{ip_address}}
 
 # - debug: msg="{{ host }} is {{action}}d on {{ip_address}}" 
