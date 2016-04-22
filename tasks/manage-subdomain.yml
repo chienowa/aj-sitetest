@@ -7,7 +7,7 @@
 
   - debug: msg="DEBUG {{dbg}}" 
  
-  - name: manage subdomain
+  - name: manage subdomain using script/do-subdomain.sh
     shell: script/do-subdomain.sh {{action}} {{apikey}} {{host}} {{tld}} {{ip_address}}
     register: subdomain
 
