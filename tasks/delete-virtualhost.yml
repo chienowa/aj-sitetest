@@ -19,7 +19,7 @@
     when: force == true
 
   - name: delete ftp user
-    user: name="{{ domain |replace('.','')}}" state=absent remove=yes
+    user: name="{{user_name}}" state=absent remove=yes
     when: force == true
 
 # Delete Database

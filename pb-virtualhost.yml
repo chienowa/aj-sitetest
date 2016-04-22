@@ -3,14 +3,16 @@
   vars:
     action: create|delete
     force: true
+    apikey: "default-do-apikey"
     domain: example.com
     vhdir: /var/www
     confdir: /etc/httpd/conf.d/
     conffile: "{{ domain }}.conf"
     adminemail: "webmaster@{{domain}}"
-    user_name: "{{ domain |replace('.','') }}"
+    user_name: "{{ domain | replace('.','') | truncate(16, True, '')  }}"
     group_name: ec2-user
     db_name: "{{user_name}}"
+    ip_address: "{{ ansible_eth0.ipv4.address }}"
   sudo: yes
   tasks:
     - include: tasks/create-virtualhost.yml
@@ -18,6 +20,9 @@
 
     - include: tasks/delete-virtualhost.yml
       when: action == 'delete'
+
+    - include: tasks/manage-domain.yml
+
 
   handlers:
     - name: sync password
