@@ -51,6 +51,8 @@
 
   - debug: msg="user  [{{ user_name }}] is created and password is [{{user_password.stdout}}]" 
 
+  - debug: msg="db [{{ db_name }}] created." 
+
   - debug: msg="dbuser is [{{ user_name }}]. db password is [{{db_password.stdout}}]" 
 
 
