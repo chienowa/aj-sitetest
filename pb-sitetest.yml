@@ -18,7 +18,6 @@
   sudo: yes
 
   tasks:
-    - debug: msg="{{user_name}}"
     - include: tasks/create-virtualhost.yml
       when: action == 'create'
 
